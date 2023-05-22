@@ -6,3 +6,5 @@ tfrecords
 audios
 ./videos
 videos
+./wct_frames
+wct_frames
