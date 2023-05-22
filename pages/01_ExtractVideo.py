@@ -50,7 +50,7 @@ def main():
             st.write("Sedang mengekstrak frame")
 
             # Extract frames
-            func.extract_frame(uploaded_video, frames_directory, 50)
+            func.extract_frame(uploaded_video, frames_directory, 2)
 
             # Extract audio
             func.extract_audio(uploaded_video, audio_directory)

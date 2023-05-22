@@ -6,12 +6,12 @@ from tensorflow.keras.layers import Input, Conv2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications.vgg19 import VGG19
-from ops import (
+from photorealistic_style_transfer.ops import (
     WaveLetPooling, WaveLetUnPooling,
     WhiteningAndColoring, get_predict_function,
     gram_matrix)
-from data_processing import build_input_pipe
-from utils import download_weight
+from photorealistic_style_transfer.data_processing import build_input_pipe
+from photorealistic_style_transfer.utils import download_weight
 
 VGG_LAYERS = [
     'block1_conv1', 'block1_conv2',

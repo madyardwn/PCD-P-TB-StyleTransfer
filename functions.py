@@ -187,8 +187,8 @@ def perform_style_transfer(frames_directory, style_image_path, output_directory)
         content = read_img(content, image_size, expand_dims=True)
         gen = model.transfer(content, style_image, 1.0)
         output_path = os.path.join(output_directory, f'{idx}.png')
+        # cv2.imwrite(output_path, content[0][..., ::-1])
         cv2.imwrite(output_path, gen[0][..., ::-1])
-        display_outputs(content[0], style_image[0], gen[0])
 
         # Update progress bar
         progress_percent = (idx + 1) / len(content_img)
