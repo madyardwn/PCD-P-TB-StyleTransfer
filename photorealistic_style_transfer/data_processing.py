@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.python.keras.applications import imagenet_utils
+from tensorflow.keras.applications import imagenet_utils
 
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 
