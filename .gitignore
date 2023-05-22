@@ -4,3 +4,5 @@ frames
 tfrecords
 ./audios
 audios
+./videos
+videos

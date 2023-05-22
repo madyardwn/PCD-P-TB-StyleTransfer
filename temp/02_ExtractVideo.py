@@ -30,7 +30,7 @@ def extract_frames_and_audio(video_path, output_frame_directory, output_audio_di
     # Ekstraksi frame dari video
     while success:
         # Menyimpan setiap frame sebagai gambar
-        frame_path = os.path.join(output_frame_directory, f"frame_{count}.jpg")
+        frame_path = os.path.join(output_frame_directory, f"frame_{count}.png")
         cv2.imwrite(frame_path, image)
         
         # Membaca frame berikutnya
