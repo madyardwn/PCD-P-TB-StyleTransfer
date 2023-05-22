@@ -44,11 +44,11 @@ def main():
                 extract_frames(temp_file, output_directory)
             st.write("Ekstraksi selesai!")
 
-            # Menampilkan frame-frame yang diekstrak
-            frames = os.listdir(output_directory)
-            for frame in frames:
-                frame_path = os.path.join(output_directory, frame)
-                st.image(frame_path)
+            # # Menampilkan frame-frame yang diekstrak
+            # frames = os.listdir(output_directory)
+            # for frame in frames:
+            #     frame_path = os.path.join(output_directory, frame)
+            #     st.image(frame_path)
 
 # Menjalankan aplikasi
 if __name__ == "__main__":
