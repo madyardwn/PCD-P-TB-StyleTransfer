@@ -173,7 +173,7 @@ def perform_style_transfer(frames_directory, style_image_path, output_directory)
     model.load_weight('photorealistic_style_transfer/checkpoints/wtc2.h5')
 
     # Menentukan ukuran gambar yang akan digunakan
-    image_size = 1920
+    image_size = 1024
 
     # Inisialisasi progress bar
     progress_text = "Melakukan style transfer..."
@@ -192,5 +192,42 @@ def perform_style_transfer(frames_directory, style_image_path, output_directory)
 
         # Update progress bar
         progress_percent = (idx + 1) / len(content_img)
+        my_bar.progress(progress_percent, text=progress_text)
+        time.sleep(0.1)
+
+# Fungsi untuk menyaring frame yang hitam
+def filter_black_frames(frames_directory, output_directory):
+    # Menghapus dan Membuat output_directory jika sudah ada
+    if os.path.exists(output_directory):
+        shutil.rmtree(output_directory)
+    os.mkdir(output_directory)
+
+    # Mengambil semua frame yang ada di direktori frames
+    frames = os.listdir(frames_directory)
+    frames = sorted(frames, key=lambda x: int(re.findall(r'\d+', x)[0]))
+
+    img = []
+
+    # Baca semua gambar
+    for frame in frames:
+        frame = frames_directory + "/" + frame
+        img.append(frame)
+
+    # Inisialisasi progress bar
+    progress_text = "Menyaring frame yang hitam..."
+    my_bar = st.progress(0, text=progress_text)
+
+    # Menyaring frame yang hitam
+    for idx, image in enumerate(img):
+        img = cv2.imread(image)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        if cv2.countNonZero(gray) != 0:
+            output_path = os.path.join(output_directory, f'{idx}.png')
+            cv2.imwrite(output_path, img)
+        else:
+            print("Frame ", idx, " berwarna hitam")
+
+        # Update progress bar
+        progress_percent = (idx + 1) / len(img)
         my_bar.progress(progress_percent, text=progress_text)
         time.sleep(0.1)

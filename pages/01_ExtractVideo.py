@@ -9,6 +9,7 @@ def main():
     audio_directory = "audios"
     image_directory = "images"
     wct_frames_directory = "wct_frames"
+    clean_frames_directory = "clean_frames"
 
     st.title("Ekstraksi Frame dan Audio dari Video")
     st.write("Unggah video untuk mengekstrak frame-frame dan audio darinya.")
@@ -58,8 +59,11 @@ def main():
             # Perform Style Transfer
             func.perform_style_transfer(frames_directory, uploaded_style, wct_frames_directory)
 
+            # Menghapus Frame yang hitam
+            func.filter_black_frames(wct_frames_directory, clean_frames_directory)
+
             # Combine frames to video
-            func.combine_frames_to_video(wct_frames_directory, video_directory)
+            func.combine_frames_to_video(clean_frames_directory, video_directory)
 
             # Combine audio to video
             func.combine_audio_to_video(audio_directory, video_directory)
