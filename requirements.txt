@@ -6,3 +6,4 @@ numpy
 pandas
 streamlit-option-menu
 tensorflow
+moviepy

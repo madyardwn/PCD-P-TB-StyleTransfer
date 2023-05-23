@@ -151,7 +151,7 @@ def combine_audio_to_video(audio_directory, video_directory):
     os.remove(input_video_path)
 
 # Fungsi untuk melakukan style transfer
-def perform_style_transfer(frames_directory, style_image_path, output_directory):
+def perform_style_transfer(frames_directory, style_image_path, output_directory, image_size=512):
     # Menghapus dan Membuat output_directory jika sudah ada
     if os.path.exists(output_directory):
         shutil.rmtree(output_directory)
@@ -171,9 +171,6 @@ def perform_style_transfer(frames_directory, style_image_path, output_directory)
     # Menggunakan model WCT2
     model = WCT2()
     model.load_weight('photorealistic_style_transfer/checkpoints/wtc2.h5')
-
-    # Menentukan ukuran gambar yang akan digunakan
-    image_size = 1024
 
     # Inisialisasi progress bar
     progress_text = "Melakukan style transfer..."
@@ -231,3 +228,29 @@ def filter_black_frames(frames_directory, output_directory):
         progress_percent = (idx + 1) / len(img)
         my_bar.progress(progress_percent, text=progress_text)
         time.sleep(0.1)
+
+# Fungsi untuk melakukan style transfer pada satu 
+def perform_single_style_transfer(content_image_path, style_image_path, output_directory, image_size=1024):
+    # Menggunakan model WCT2
+    model = WCT2()
+    model.load_weight('photorealistic_style_transfer/checkpoints/wtc2.h5')
+
+    # Menentukan ukuran gambar yang akan digunakan
+    image_size = 1024
+
+    # Membaca gambar content
+    content_image = read_img(content_image_path, image_size, expand_dims=True)
+
+    # Membaca gambar style
+    style_image = read_img(style_image_path, image_size, expand_dims=True)
+
+    # Lakukan transfer gaya pada satu gambar content dengan satu gambar style
+    gen = model.transfer(content_image, style_image, 1.0)
+    output_path = os.path.join(output_directory, f'output.png')
+
+    # Menghapus terlebih dahulu output_path jika sudah ada
+    if os.path.exists(output_path):
+        os.remove(output_path)
+
+    # Menuliskan gambar hasil style transfer
+    cv2.imwrite(output_path, gen[0][..., ::-1])

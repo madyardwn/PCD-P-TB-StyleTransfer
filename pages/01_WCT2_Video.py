@@ -11,7 +11,7 @@ def main():
     wct_frames_directory = "wct_frames"
     clean_frames_directory = "clean_frames"
 
-    st.title("Ekstraksi Frame dan Audio dari Video")
+    st.title("Implementasi WCT2 pada Video")
     st.write("Unggah video untuk mengekstrak frame-frame dan audio darinya.")
 
     # Mengunggah video
@@ -19,9 +19,11 @@ def main():
     style_file = st.file_uploader("Unggah style", type=["jpg", "jpeg", "png"])
     if video_file is not None and style_file is not None:
         # Menampilkan preview file yang baru diupload
+        st.write("Video Input")
         st.video(video_file)
 
         # Menampilkan preview style yang baru diupload
+        st.write("Style Input")
         st.image(style_file)
 
         # Mengatur path untuk menyimpan video yang baru diupload
@@ -46,18 +48,26 @@ def main():
         with open(uploaded_style, "wb") as f:
             f.write(style_file.getbuffer())
 
+        # Mengatur pembagian frame yang akan diambil
+        frame_division = st.number_input('Pembagian frame', min_value=1, max_value=100, value=1, step=1)
+        st.write('Pembagian frame yang akan diambil: ', frame_division)
+        
+        # Mengatur Ukuran video yang akan ditampilkan
+        image_size = st.number_input('Ukuran video', min_value=256, max_value=2048, value=256, step=256)
+        st.write('Ukuran video yang akan ditampilkan: ', image_size)
+
         # Ekstraksi frame dan audio jika tombol ditekan
-        if st.button("Ekstrak Frame dan Audio"):
-            st.write("Sedang mengekstrak frame")
+        if st.button("Proses Video"):
+            st.write("Memulai proses implementasi WCT2 pada video...")
 
             # Extract frames
-            func.extract_frame(uploaded_video, frames_directory, 2)
+            func.extract_frame(uploaded_video, frames_directory, frame_division)
 
             # Extract audio
             func.extract_audio(uploaded_video, audio_directory)
 
             # Perform Style Transfer
-            func.perform_style_transfer(frames_directory, uploaded_style, wct_frames_directory)
+            func.perform_style_transfer(frames_directory, uploaded_style, wct_frames_directory, image_size)
 
             # Menghapus Frame yang hitam
             func.filter_black_frames(wct_frames_directory, clean_frames_directory)
