@@ -1,11 +1,33 @@
 import streamlit as st
 import streamlit.components.v1 as components
+import os
 
 st.set_page_config(
     page_title="Home",
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# Inisialisasi direktori jika belum ada
+# Direktori images
+if not os.path.exists("images"):
+    os.makedirs("images")
+
+# Direktori videos
+if not os.path.exists("videos"):
+    os.makedirs("videos")
+
+# Direktori audios
+if not os.path.exists("audios"):
+    os.makedirs("audios")
+
+# Direktori frames
+if not os.path.exists("frames"):
+    os.makedirs("frames")
+
+# Direktori wct_frames
+if not os.path.exists("wct_frames"):
+    os.makedirs("wct_frames")
 
 st.snow()
 st.markdown(
