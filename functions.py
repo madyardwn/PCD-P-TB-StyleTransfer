@@ -46,6 +46,7 @@ def extract_frame(video_directory, frames_directory, gap=10):
 
         # Tambahkan delay kecil untuk menghindari tampilan progress bar yang terlalu cepat
         time.sleep(0.01)
+    my_bar.progress(100, text=progress_text)
 
 # Fungsi untuk mengekstrak audio dari video
 def extract_audio(video_directory, audio_directory):
@@ -64,6 +65,7 @@ def extract_audio(video_directory, audio_directory):
     for percent_complete in range(0, 100, 10): 
         time.sleep(0.1)
         my_bar.progress(percent_complete + 10, text=progress_text)
+    my_bar.progress(100, text=progress_text)
 
     # Close Video dan Audio
     clip.close()
@@ -105,6 +107,7 @@ def combine_frames_to_video(frames_directory, video_directory):
         video.write(cv2.imread(img[i]))
         print('frame ', i+1, ' of ', len(img))
         my_bar.progress((i + 1) / len(img), text=progress_text)
+    my_bar.progress(100, text=progress_text)
 
     video.release()
 
@@ -142,6 +145,7 @@ def combine_audio_to_video(audio_directory, video_directory):
     for percent_complete in range(0, 100, 10): 
         time.sleep(0.1)
         my_bar.progress(percent_complete + 10, text=progress_text)
+    my_bar.progress(100, text=progress_text)
 
     # Close video dan audio
     video.close()
@@ -191,6 +195,7 @@ def perform_style_transfer(frames_directory, style_image_path, output_directory,
         progress_percent = (idx + 1) / len(content_img)
         my_bar.progress(progress_percent, text=progress_text)
         time.sleep(0.1)
+    my_bar.progress(100, text=progress_text)
 
 # Fungsi untuk menyaring frame yang hitam
 def filter_black_frames(frames_directory, output_directory):
@@ -228,6 +233,7 @@ def filter_black_frames(frames_directory, output_directory):
         progress_percent = (idx + 1) / len(img)
         my_bar.progress(progress_percent, text=progress_text)
         time.sleep(0.1)
+    my_bar.progress(100, text=progress_text)
 
 # Fungsi untuk melakukan style transfer pada satu 
 def perform_single_style_transfer(content_image_path, style_image_path, output_directory, image_size=1024):
@@ -235,14 +241,15 @@ def perform_single_style_transfer(content_image_path, style_image_path, output_d
     model = WCT2()
     model.load_weight('photorealistic_style_transfer/checkpoints/wtc2.h5')
 
-    # Menentukan ukuran gambar yang akan digunakan
-    image_size = 1024
-
     # Membaca gambar content
     content_image = read_img(content_image_path, image_size, expand_dims=True)
 
     # Membaca gambar style
     style_image = read_img(style_image_path, image_size, expand_dims=True)
+
+    # Menampilkan progress bar
+    progress_text = "Operation in progress. Please wait."
+    my_bar = st.progress(0, text=progress_text)
 
     # Lakukan transfer gaya pada satu gambar content dengan satu gambar style
     gen = model.transfer(content_image, style_image, 1.0)
@@ -254,3 +261,9 @@ def perform_single_style_transfer(content_image_path, style_image_path, output_d
 
     # Menuliskan gambar hasil style transfer
     cv2.imwrite(output_path, gen[0][..., ::-1])
+
+    # Update progress bar menjadi 100%
+    my_bar.progress(100, text=progress_text)
+
+    # Menampilkan gambar hasil style transfer
+    st.image(output_path)
