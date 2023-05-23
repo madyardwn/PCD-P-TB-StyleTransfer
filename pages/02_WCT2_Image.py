@@ -54,6 +54,10 @@ def main():
             # Perform Style Transfer
             func.perform_single_style_transfer(uploaded_content, uploaded_style, image_directory, image_size)
 
+            # Menampilkan citra hasil style transfer
+            st.write("Citra hasil style transfer")
+            st.image(os.path.join(image_directory, "output.png"), width=1024)
+
 # Menjalankan aplikasi
 if __name__ == "__main__":
     main()

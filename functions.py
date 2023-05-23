@@ -264,6 +264,3 @@ def perform_single_style_transfer(content_image_path, style_image_path, output_d
 
     # Update progress bar menjadi 100%
     my_bar.progress(100, text=progress_text)
-
-    # Menampilkan gambar hasil style transfer
-    st.image(output_path)
