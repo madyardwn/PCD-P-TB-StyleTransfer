@@ -6,7 +6,7 @@ import functions as func
 def main():
     image_directory = "images"
 
-    st.title("Implementasi WCT2 pada Video")
+    st.title("Implementasi WCT2 pada Citra")
     st.write("Unggah citra konten dan style untuk melakukan style transfer.")
 
     # Mengunggah citra konten
