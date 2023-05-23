@@ -248,7 +248,7 @@ def perform_single_style_transfer(content_image_path, style_image_path, output_d
     style_image = read_img(style_image_path, image_size, expand_dims=True)
 
     # Menampilkan progress bar
-    progress_text = "Operation in progress. Please wait."
+    progress_text = "Sedang melakukan style transfer..."
     my_bar = st.progress(0, text=progress_text)
 
     # Lakukan transfer gaya pada satu gambar content dengan satu gambar style
