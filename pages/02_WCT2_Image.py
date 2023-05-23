@@ -43,12 +43,16 @@ def main():
         with open(uploaded_style, "wb") as f:
             f.write(style_file.getbuffer())
 
+        # Mengatur Ukuran citra yang akan ditampilkan
+        image_size = st.number_input('Ukuran citra', min_value=256, max_value=2048, value=256, step=256)
+        st.write('Ukuran citra yang akan ditampilkan: ', image_size)
+
         # Lakukan style transfer jika tombol ditekan
         if st.button("Proses citra"):
             st.write("Memulai proses implementasi WCT2 pada citra...")
 
             # Perform Style Transfer
-            func.perform_single_style_transfer(uploaded_content, uploaded_style, "images")
+            func.perform_single_style_transfer(uploaded_content, uploaded_style, image_directory, image_size)
 
 # Menjalankan aplikasi
 if __name__ == "__main__":
