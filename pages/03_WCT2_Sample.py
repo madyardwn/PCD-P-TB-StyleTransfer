@@ -33,7 +33,7 @@ def main():
 
         # Menampilkan citra hasil style transfer
         st.write("Citra hasil style transfer")
-        st.image(os.path.join(output_path, "output.png"))
+        st.image(os.path.join(output_path, "output.png"), width=1024)
 
 # Menjalankan aplikasi
 if __name__ == "__main__":
